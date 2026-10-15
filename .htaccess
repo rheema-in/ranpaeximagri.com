@@ -1,0 +1,21 @@
+# Ranpa Exim - ranpaeximagri.com
+ErrorDocument 404 /404.html
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+# www -> apex https (single redirect)
+RewriteCond %{HTTP_HOST} ^www\.ranpaeximagri\.com$ [NC]
+RewriteRule ^(.*)$ https://ranpaeximagri.com/$1 [L,R=301]
+# http -> https
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+<IfModule mod_expires.c>
+ExpiresActive On
+ExpiresByType image/webp "access plus 1 week"
+ExpiresByType image/png "access plus 1 week"
+ExpiresByType text/css "access plus 1 week"
+ExpiresByType application/javascript "access plus 1 week"
+ExpiresByType text/html "access plus 0 seconds"
+</IfModule>
